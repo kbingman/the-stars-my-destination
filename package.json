@@ -1,0 +1,35 @@
+{
+  "name": "sectors",
+  "version": "0.0.1",
+  "description": "Go based star generator",
+  "main": "index.js",
+  "scripts": {
+    "start": "go run *.go && gulp",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gulp": "gulp",
+    "watch": "npm start > server.log & npm run gulp"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^5.9.1",
+    "gulp": "^3.8.7",
+    "gulp-browserify": "^0.5.0",
+    "gulp-hogan-compile": "^0.2.1",
+    "gulp-livereload": "^2.1.0",
+    "gulp-minify-css": "^0.3.7",
+    "gulp-rename": "^1.2.0",
+    "gulp-sass": "^0.7.2",
+    "gulp-uglify": "^0.3.1",
+    "karma": "^0.12.21",
+    "karma-browserifast": "^0.7.0",
+    "karma-chrome-launcher": "^0.1.4",
+    "karma-mocha": "^0.1.7",
+    "tiny-lr": "0.0.9"
+  },
+  "dependencies": {
+    "alea": "0.0.9",
+    "jquery": "^2.1.1",
+    "proc-noise": "0.0.1"
+  }
+}
