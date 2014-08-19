@@ -12,12 +12,7 @@ function systemData() {
 
   this.attributes({
     stars: [],
-    // terrestial: [],
-    // jovian: [],
-    // neptunian: [],
-    // cerian: [],
-    // kuiperian: [],
-    // oortian: []
+    system: {}
   });
 
   this.createSystem = function(e, data){
@@ -27,8 +22,7 @@ function systemData() {
     var starType = starTypes[data.system.stars[0].name];
 
     this.attr.system = data.system;
-    this.attr.system.planets = [];
-    // this.attr.stars = data.system.stars;
+    this.attr.system.bodies = [];
     this.attr.seed = alea();
     this.attr.mass = this.attr.system.stars.reduce(function(memo, s){
         memo = memo + s.mass;
@@ -41,15 +35,11 @@ function systemData() {
       // console.log(p, count);
 
       for (var i = 0; i < count; i++){
-        this.attr.system.planets.push({
+        this.attr.system.bodies.push({
           type: p
         });
       }
-
     }
-
-    // console.log(this.attr.system);
-
 
     this.trigger('uiRenderSystem', {
       system: data.system

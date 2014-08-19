@@ -29,10 +29,11 @@ module.exports = {
     mass: 1.8,
     color: 'hsl(180, 0%, 100%)',
     planets: {
-      terrestial: 6,
+      terrestrial: 6,
       jovian: 6,
       neptunian: 6,
-      cerian: 2
+      cerian: 2,
+      kuiperian: 24
     }
   },
   'yellow-white': {
@@ -43,10 +44,11 @@ module.exports = {
     mass: 1.2,
     color: 'hsl(30, 50%, 90%)',
     planets: {
-      terrestial: 4,
+      terrestrial: 4,
       jovian: 4,
       neptunian: 3,
-      cerian: 2
+      cerian: 6,
+      kuiperian: 18
     }
   },
   'yellow': {
@@ -57,10 +59,11 @@ module.exports = {
     mass: 1,
     color: 'hsl(30, 100%, 80%)',
     planets: {
-      terrestial: 3,
+      terrestrial: 3,
       jovian: 2,
       neptunian: 2,
-      cerian: 2
+      cerian: 6,
+      kuiperian: 14
     }
   },
   'orange': {
@@ -71,10 +74,11 @@ module.exports = {
     mass: 0.6,
     color: 'hsl(15, 100%, 80%)',
     planets: {
-      terrestial: 2,
+      terrestrial: 2,
       jovian: 2,
       neptunian: 2,
-      cerian: 2
+      cerian: 6,
+      kuiperian: 10
     }
   },
   'red': {
@@ -85,10 +89,11 @@ module.exports = {
     mass: 0.2,
     color: 'hsla(0, 100%, 90%, 0.8)',
     planets: {
-      terrestial: 1,
+      terrestrial: 1,
       jovian: 2,
       neptunian: 1,
-      cerian: 2
+      cerian: 2,
+      kuiperian: 4
     }
   }
 };

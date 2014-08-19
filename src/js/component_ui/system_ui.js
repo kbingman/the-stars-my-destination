@@ -16,14 +16,29 @@ function systemUI() {
 
   this.render = function(e, data){
     this.clear();
-    var offset = (data.system.stars.length - 1) * 21 * data.system.rand * data.system.stars[0].radius;
+    var _radius = data.system.stars[0].radius;
+    var _offset = (data.system.stars.length - 1) * 11 * data.system.rand * _radius;
+    var _x = $(window).width() / 2;
+    var _y = $(window).height() / 2;
+
+    // Get all major planets
+    data.system.planets = data.system.bodies.reduce(function(memo, p){
+      if (!/(cerian|kuiperian)/.test(p.type)) {
+        memo.push(p);
+      }
+      return memo;
+    }, []);
+
     data.system.stars.forEach(function(star, i, stars){
       if (i % 2 ){
-        offset = offset * -1;
+        _offset = _offset * -1;
       }
-      var x = (this.attr.width / 2) + offset;
-      var y = (this.attr.height / 2);
-      this.disk(x, y, star.radius * 10, star.color);
+      this.disk(_x + _offset, _y, star.radius * 10, star.color);
+    }, this);
+
+    data.system.planets.forEach(function(planet, i){
+      console.log(planet);
+      this.circle(_x, _y, (i + 1) * 42 * data.system.rand * _radius, 'white');
     }, this);
 
     this.on('click', function(e){

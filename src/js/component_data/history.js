@@ -55,6 +55,7 @@ function flightHistory() {
     };
 
     this.onEvent = function(e, data) {
+        var location = _useHashState? window.location.hash : window.location.pathname;
         var urlToPush;
 
         _routes.forEach(function(el) {
@@ -68,7 +69,9 @@ function flightHistory() {
                 if (_useHashState) {
                     window.location.hash = urlToPush;
                 } else {
-                    history.pushState({ path: urlToPush }, '', urlToPush);
+                    if (location !== urlToPush){
+                        history.pushState({ path: urlToPush }, '', urlToPush);
+                    }
                 }
             }
         });
@@ -76,7 +79,7 @@ function flightHistory() {
 
     this.after('initialize', function() {
         console.log(history.state)
-        if (history.state) {
+        if (history.state !== null) {
           this.on(window, 'popstate', this.onLoad);
         }
 

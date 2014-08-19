@@ -35,10 +35,10 @@ function withStar() {
 
   this.setType = function(seed) {
     switch (true) {
-      case seed > 0.999:
+      case seed > 0.9997:
         // this.attr.counts['blue']++;
         return starTypes['blue'];
-      case seed > 0.995 && seed <= 0.999:
+      case seed > 0.995 && seed <= 0.9997:
         // this.attr.counts['blue-white']++;
         return starTypes['blue-white'];
       case seed > 0.97 && seed <= 0.995:
