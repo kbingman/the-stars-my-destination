@@ -41,7 +41,7 @@ gulp.task('templates', function() {
     gulp.src('./templates/**/*.mustache')
         .pipe(compiler('templates.js', {
           wrapper: 'commonjs',
-          hoganModule: 'hogan-updated'
+          hoganModule: 'hogan'
         }))
         .pipe(gulp.dest('src/js/'));
 });

@@ -1,5 +1,5 @@
 var $ = require('jquery');
-var flight = require('../../node_modules/flight-umd/flight');
+var flight = require('./lib/flight');
 var templates = require('./templates');
 var withCanvas = require('./mixin/with_canvas');
 
@@ -20,7 +20,9 @@ window.templates = templates;
 
 var defaultPage = require('./pages/default.js');
 
-// compose.mixin(registry, [advice.withAdvice, withLogging]);
+flight.debug.enable(true);
+flight.compose.mixin(flight.registry, [flight.advice.withAdvice, flight.logger]);
+DEBUG.events.logAll();
 
 /**
  * Sets up the default components

@@ -1,4 +1,4 @@
-var flight = require('../../../node_modules/flight-umd/flight');
+var flight = require('../lib/flight');
 var starTypes = require('../mixin/with_star_types.js');
 var planetTypes = require('../mixin/with_planet_types.js');
 // var withPlanetBuilder= require('../mixin/with_star_builder.js');

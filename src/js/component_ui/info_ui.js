@@ -1,4 +1,4 @@
-var flight = require('../../../node_modules/flight-umd/flight');
+var flight = require('../lib/flight');
 var withCanvas = require('../mixin/with_hogan.js');
 
 module.exports = flight.component(infoUI, withCanvas);

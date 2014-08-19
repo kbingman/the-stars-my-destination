@@ -1,5 +1,5 @@
 var templates = require('../templates');
-var flight = require('../../../node_modules/flight-umd/flight');
+var flight = require('../lib/flight');
 var Hogan = require('hogan')
 
 module.exports = withHogan;

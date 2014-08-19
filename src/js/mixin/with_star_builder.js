@@ -1,5 +1,5 @@
 var starTypes = require('./with_star_types');
-var flight = require('../../../node_modules/flight-umd/flight');
+var flight = require('../lib/flight');
 var Alea = require('alea');
 
 module.exports = withStar;

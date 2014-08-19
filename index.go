@@ -10,7 +10,7 @@ import (
 
 func renderIndex(w http.ResponseWriter, req *http.Request, _ httprouter.Params) {
   w.Header().Set("Content-Type", "text/html")
-  context := map[string]string{ "greeting":"It's Full of Stars" }
+  context := map[string]string{ "greeting":"The Stars My Destination" }
 
   fmt.Fprint(w, renderHTML("sector", context))
 }

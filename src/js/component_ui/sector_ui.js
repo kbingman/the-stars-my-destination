@@ -1,4 +1,4 @@
-var flight = require('../../../node_modules/flight-umd/flight');
+var flight = require('../lib/flight');
 var withCanvas = require('../mixin/with_canvas.js');
 
 module.exports = flight.component(withCanvas, sectorUI);

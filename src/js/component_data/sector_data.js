@@ -3,7 +3,7 @@ BASE_THRESHOLD = 32;
 BINARY_FREQ = 0.50;
 TRINARY_FREQ = 0.88;
 
-var flight = require('../../../node_modules/flight-umd/flight');
+var flight = require('../lib/flight');
 var withStarBuilder= require('../mixin/with_star_builder.js');
 var withUtils = require('../mixin/with_utils.js')
 

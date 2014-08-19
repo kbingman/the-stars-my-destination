@@ -1,7 +1,7 @@
 /**
  * Default Page for the application
  */
-var flight = require('../../../node_modules/flight-umd/flight');
+var flight = require('../lib/flight');
 var sectorData = require('../component_data/sector_data.js');
 var systemData = require('../component_data/system_data.js');
 var sectorUI = require('../component_ui/sector_ui.js');

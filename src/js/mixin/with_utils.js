@@ -8,7 +8,6 @@ function withUtils() {
 
   this.round = function(num, places) {
     return Math.round(num * Math.pow(10, places)) / Math.pow(10, places);
-  }
-
+  };
 
 };
