@@ -78,7 +78,6 @@ function flightHistory() {
     };
 
     this.after('initialize', function() {
-        console.log(history.state)
         if (history.state !== null) {
           this.on(window, 'popstate', this.onLoad);
         }

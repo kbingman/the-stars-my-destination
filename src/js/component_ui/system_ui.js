@@ -21,14 +21,6 @@ function systemUI() {
     var _x = $(window).width() / 2;
     var _y = $(window).height() / 2;
 
-    // Get all major planets
-    data.system.planets = data.system.bodies.reduce(function(memo, p){
-      if (!/(cerian|kuiperian)/.test(p.type)) {
-        memo.push(p);
-      }
-      return memo;
-    }, []);
-
     data.system.stars.forEach(function(star, i, stars){
       if (i % 2 ){
         _offset = _offset * -1;
@@ -37,7 +29,6 @@ function systemUI() {
     }, this);
 
     data.system.planets.forEach(function(planet, i){
-      console.log(planet);
       this.circle(_x, _y, (i + 1) * 42 * data.system.rand * _radius, 'white');
     }, this);
 

@@ -6,7 +6,7 @@ function withCanvas() {
     var context = this.attr.context;
 
     context.beginPath();
-    context.arc(x, y, radius, 0, Math.PI*2, true);
+    context.arc(x, y, radius, 0, Math.PI * 2, true);
     context.closePath();
     context.fillStyle = color;
     context.fill();
@@ -16,7 +16,7 @@ function withCanvas() {
     var context = this.attr.context;
 
     context.beginPath();
-    context.arc(x, y, radius, 0, Math.PI*2, true);
+    context.arc(x, y, radius, 0, Math.PI * 2, true);
     context.closePath();
     context.fillStyle = 'transparent';
     context.strokeStyle = color;

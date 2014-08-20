@@ -1,5 +1,5 @@
 FUZZINESS = 4;
-BASE_THRESHOLD = 32;
+BASE_THRESHOLD = 128;
 BINARY_FREQ = 0.50;
 TRINARY_FREQ = 0.88;
 
@@ -15,7 +15,7 @@ module.exports = flight.component(withUtils, withStarBuilder, sectorData);
 function sectorData() {
   this.attributes({
     systems: [],
-    width: 64,
+    width: 114,
     height: 64
   });
 

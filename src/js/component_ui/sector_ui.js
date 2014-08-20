@@ -13,7 +13,6 @@ function sectorUI() {
   };
 
   this.render = function(e, data){
-    console.log(data)
     this.clear();
     data.systems.forEach(function(system){
       var star = system.stars[0];
