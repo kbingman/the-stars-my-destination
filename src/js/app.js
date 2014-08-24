@@ -1,7 +1,10 @@
 var $ = require('jquery');
 var flight = require('./lib/flight');
 var templates = require('./templates');
-var withCanvas = require('./mixin/with_canvas');
+var seedrandom = require('seedrandom');
+
+// Global PRNG: set Math.random.
+seedrandom('hello.', { global: true });
 
 /**
  * Expose Globals

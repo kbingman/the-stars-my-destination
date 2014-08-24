@@ -30,6 +30,8 @@
   },
   "dependencies": {
     "alea": "0.0.9",
+    "es5-shim": "^4.0.3",
+    "es6-shim": "^0.16.0",
     "jquery": "^2.1.1",
     "proc-noise": "0.0.1"
   }

@@ -5,6 +5,7 @@ var planetTypes = require('../mixin/with_planet_types.js');
 
 var Perlin = require('proc-noise');
 var Alea = require('alea');
+var Accrete = require('../lib/accrete');
 
 module.exports = flight.component(systemData);
 
@@ -21,6 +22,7 @@ function systemData() {
     var rand = alea();
     var starType = starTypes[data.system.stars[0].name];
 
+
     this.attr.system = data.system;
     this.attr.system.bodies = [];
     this.attr.seed = alea();
@@ -30,42 +32,15 @@ function systemData() {
       }, 0);
 
     // Create planets
-    // for (var p in starType.planets) {
-    //
-    //   count = Math.floor((0.3 + rand) * starType.planets[p] / this.attr.system.mass, 2 / this.attr.system.stars.length);
-    //   // console.log(p, count);
-    //
-    //   for (var i = 0; i < count; i++){
-    //     this.attr.system.bodies.push({
-    //       type: p
-    //     });
-    //   }
-    // }
-
-    var jovian = Math.floor((0.8 + rand) * starType.planets['jovian'] / this.attr.system.mass / this.attr.system.stars.length);
-    var neptunian = Math.floor((jovian * rand) * starType.planets['neptunian'] / this.attr.system.mass / this.attr.system.stars.length);
-
-    for (var i = 0; i < jovian; i++){
-      this.attr.system.bodies.push({
-        type: 'jovian'
-      });
-    }
-
-    for (var i = 0; i < neptunian; i++){
-      this.attr.system.bodies.push({
-        type: 'neptunian'
-      });
-    }
-    console.log(count)
-    console.log(this.attr.system.bodies)
+    var gen = new Accrete(this.attr.system.mass);
+    var accrete = gen.distributePlanets();
+    console.log(accrete);
 
     // Get all major planets
-    this.attr.system.planets = this.attr.system.bodies.reduce(function(memo, p){
-      if (!/(cerian|kuiperian)/.test(p.type)) {
-        memo.push(p);
-      }
-      return memo;
-    }, []);
+    this.attr.system.planets = accrete.planets.map(function(p){
+        p.eu= p.mass * SOLAR_MASS_IN_EARTH_MASS;
+        return p;
+    });
 
     this.trigger('uiRenderSystem', {
       system: data.system

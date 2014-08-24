@@ -29,7 +29,7 @@ module.exports = {
   init: function() {
     this.render();
     infoUI.attachTo('[data-container="info"]');
-    sectorUI.attachTo('canvas#map', { scale: 16 });
+    sectorUI.attachTo('canvas#map', { scale: 10 });
     systemUI.attachTo('canvas#map');
     sectorData.attachTo(document);
     systemData.attachTo(document);

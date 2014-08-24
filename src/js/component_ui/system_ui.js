@@ -29,7 +29,8 @@ function systemUI() {
     }, this);
 
     data.system.planets.forEach(function(planet, i){
-      this.circle(_x, _y, (i + 1) * 42 * data.system.rand * _radius, 'white');
+      this.circle(_x, _y, planet.axis * 10, 'white');
+      this.disk(_x + planet.axis * 10, _y, 4, 'white');
     }, this);
 
     this.on('click', function(e){
