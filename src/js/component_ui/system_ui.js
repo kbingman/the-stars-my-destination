@@ -29,8 +29,14 @@ function systemUI() {
     }, this);
 
     data.system.planets.forEach(function(planet, i){
-      this.circle(_x, _y, planet.axis * 10, 'white');
-      this.disk(_x + planet.axis * 10, _y, 4, 'white');
+      var offset = data.system.stars[0].radius * 16;
+      var size = planet.gasGiant ? planet.equatorialRadius / 10000 : 2;
+      var xOffset = planet.distanceFromPrimaryStar * planet.eccentricity;
+
+      this.circle(_x + xOffset, _y, offset + planet.distanceFromPrimaryStar * 8, '#777', planet.eccentricity);
+      // this.drawPlanet(_x + xOffset, _y, offset + planet.distanceFromPrimaryStar * 8, planet.eccentricity, planet.lengthOfYear);
+
+      this.disk(offset + _x + xOffset + planet.distanceFromPrimaryStar * 8, _y, size, 'white');
     }, this);
 
     this.on('click', function(e){

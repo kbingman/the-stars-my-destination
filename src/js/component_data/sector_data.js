@@ -1,7 +1,7 @@
 FUZZINESS = 4;
-BASE_THRESHOLD = 128;
-BINARY_FREQ = 0.50;
-TRINARY_FREQ = 0.88;
+BASE_THRESHOLD = 64;
+BINARY_FREQ = 1; //0.50;
+TRINARY_FREQ = 1; //0.88;
 
 var flight = require('../lib/flight');
 var withStarBuilder= require('../mixin/with_star_builder.js');
@@ -15,8 +15,8 @@ module.exports = flight.component(withUtils, withStarBuilder, sectorData);
 function sectorData() {
   this.attributes({
     systems: [],
-    width: 114,
-    height: 64
+    width: 128,
+    height: 80
   });
 
   this.findSystem = function(e, data){
@@ -32,11 +32,11 @@ function sectorData() {
     });
 
     console.log(systems);
-    if (systems.length === 1){
-      this.trigger('buildSystemData', {
-        system: systems[0]
-      });
-    }
+    // if (systems.length === 1){
+    this.trigger('buildSystemData', {
+      system: systems[0]
+    });
+    // }
   };
 
   this.calcSystems = function() {

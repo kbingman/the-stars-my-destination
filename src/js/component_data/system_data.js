@@ -5,7 +5,9 @@ var planetTypes = require('../mixin/with_planet_types.js');
 
 var Perlin = require('proc-noise');
 var Alea = require('alea');
-var Accrete = require('../lib/accrete');
+var System = require('../lib/accrete');
+
+window.System = System
 
 module.exports = flight.component(systemData);
 
@@ -32,13 +34,15 @@ function systemData() {
       }, 0);
 
     // Create planets
-    var gen = new Accrete(this.attr.system.mass);
-    var accrete = gen.distributePlanets();
-    console.log(accrete);
+    // console.log(rand * 10e16);
+    var generator = new System(rand * 10e16);
+    var accrete = generator.distributePlanets(this.attr.system.mass);
+
+    // console.log(accrete);
 
     // Get all major planets
     this.attr.system.planets = accrete.planets.map(function(p){
-        p.eu= p.mass * SOLAR_MASS_IN_EARTH_MASS;
+        console.log(p)
         return p;
     });
 
