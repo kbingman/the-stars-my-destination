@@ -28,7 +28,8 @@ gulp.task('styles', function() {
 gulp.task('scripts', function() {
   gulp.src('./src/js/app.js')
     .pipe(browserify({
-      debug: true
+      debug: true,
+      transform: ['hoganify']
     }))
     .pipe(rename('bundle.js'))
     .pipe(gulp.dest('./public/js'))
@@ -61,5 +62,4 @@ gulp.task('default', function () {
 
   gulp.watch('./src/js/**/*.js', ['scripts']);
   gulp.watch('./src/sass/**/*.scss', ['styles']);
-  gulp.watch('./templates/**/*.mustache', ['templates']);
 });

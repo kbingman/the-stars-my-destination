@@ -2,13 +2,13 @@
  * Default Page for the application
  */
 var flight = require('../lib/flight');
+var template = require('../../../templates/sector/map.mustache');
 var sectorData = require('../component_data/sector_data.js');
 var systemData = require('../component_data/system_data.js');
 var sectorUI = require('../component_ui/sector_ui.js');
 var systemUI = require('../component_ui/system_ui.js');
 var infoUI = require('../component_ui/info_ui.js');
 var router = require('../component_data/history.js');
-var templates = require('../templates');
 
 var height = $(window).height();
 var width = $(window).width();
@@ -19,7 +19,7 @@ var width = $(window).width();
 module.exports = {
 
   render: function(){
-    $('[data-container="map"]').html(templates.map.render({
+    $('[data-container="map"]').html(template.render({
       id: 'map',
       h: height,
       w: width
@@ -39,8 +39,6 @@ module.exports = {
         '/system/:x/:y/': 'needsSystemData'
       }
     });
-
-
 
   }
 };

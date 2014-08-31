@@ -1,21 +1,29 @@
-var templates = require('../templates');
 var flight = require('../lib/flight');
-var Hogan = require('hogan')
 
 module.exports = withHogan;
 
-function withHogan() {
+function withHogan(template) {
 
   this.render = function(e, data) {
-    var utils = {
-      'round': function() {
-        return function(text, render) {
-          return text;
+
+    var template = this.attr.template;
+    var renderer = function(context) {
+        return function(text) {
+            return template.c.compile(text, template.options).render(context);
         };
-      }
+    };
+
+    var utils = {
+        round: function(){
+            return function(text){
+                var render = renderer(this);
+                var value = parseFloat(render(text)).toFixed(3);
+                return value;
+            }
+        }
     };
     var context = flight.utils.merge(utils, data);
-    this.$node.html(templates[this.attr.template].render(context));
+    this.$node.html(template.render(context));
   };
 
 }

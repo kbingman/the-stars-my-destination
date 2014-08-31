@@ -42,7 +42,7 @@ function systemData() {
 
     // Get all major planets
     this.attr.system.planets = accrete.planets.map(function(p){
-        console.log(p)
+        // console.log(p)
         return p;
     });
 

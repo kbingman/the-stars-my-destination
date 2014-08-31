@@ -5,7 +5,7 @@ module.exports = flight.component(infoUI, withCanvas);
 
 function infoUI() {
   this.attributes({
-    'template': '_system_info'
+    'template': require('../../../templates/sector/_system_info.mustache')
   });
 
   this.after('initialize', function() {

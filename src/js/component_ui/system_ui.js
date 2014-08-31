@@ -1,6 +1,7 @@
 var flight = require('../lib/flight');
 var utils = flight.utils;
 var withCanvas = require('../mixin/with_canvas.js');
+var Alea = require('alea')
 
 module.exports = flight.component(withCanvas, systemUI);
 
@@ -14,30 +15,60 @@ function systemUI() {
     this.attr.context = this.node.getContext('2d');
   };
 
-  this.render = function(e, data){
-    this.clear();
-    var _radius = data.system.stars[0].radius;
-    var _offset = (data.system.stars.length - 1) * 11 * data.system.rand * _radius;
+  this.draw = function(data) {
+    var self = this;
+    var system = data.system;
+    var alea = new Alea(system.rand);
+
+    var _radius = system.stars[0].radius;
+    var _offset = (system.stars.length - 1) * 11 * system.rand * _radius;
     var _x = $(window).width() / 2;
     var _y = $(window).height() / 2;
+    var offset = system.stars[0].radius * 8;
 
-    data.system.stars.forEach(function(star, i, stars){
-      if (i % 2 ){
-        _offset = _offset * -1;
-      }
-      this.disk(_x + _offset, _y, star.radius * 10, star.color);
-    }, this);
+    (function animate(){
 
-    data.system.planets.forEach(function(planet, i){
-      var offset = data.system.stars[0].radius * 16;
-      var size = planet.gasGiant ? planet.equatorialRadius / 10000 : 2;
-      var xOffset = planet.distanceFromPrimaryStar * planet.eccentricity;
+        self.clear();
+        window.requestAnimationFrame(animate);
+        data.system.stars.forEach(function(star, i, stars){
+          if (i % 2 ){
+            _offset = _offset * -1;
+          }
+          self.disk(_x + _offset, _y, star.radius * 8, star.color);
+        }, this);
 
-      this.circle(_x + xOffset, _y, offset + planet.distanceFromPrimaryStar * 8, '#777', planet.eccentricity);
-      // this.drawPlanet(_x + xOffset, _y, offset + planet.distanceFromPrimaryStar * 8, planet.eccentricity, planet.lengthOfYear);
+        data.system.planets.forEach(function(planet, i){
+          self.circle(_x, _y, offset + planet.distanceFromPrimaryStar * 8, '#444', planet.eccentricity);
+        }, this);
 
-      this.disk(offset + _x + xOffset + planet.distanceFromPrimaryStar * 8, _y, size, 'white');
-    }, this);
+        data.system.planets.forEach(function(planet, i){
+          var xOffset = planet.distanceFromPrimaryStar * planet.eccentricity;
+
+          planet.index = planet.index ? planet.index += 0.01 : alea() * 3000;
+          self.drawPlanet(_x, _y, offset, planet);
+        }, this);
+    })();
+
+  };
+
+  this.drawPlanet = function(centerX, centerY, offset, planet){
+       var context = this.attr.context;
+       var radius = planet.distanceFromPrimaryStar * 8 + offset;
+       var eccentricity = planet.eccentricity;
+       var size = planet.gasGiant ? planet.equatorialRadius / 10000 : 2;
+       size = size >= 2 ? size : 2;
+       var period = planet.lengthOfYear;
+       var i = planet.index / period;
+
+       xPos = centerX - (radius * (1 - eccentricity)  * Math.sin(i)) * Math.sin(0 * Math.PI) + (radius * Math.cos(i)) * Math.cos(0 * Math.PI);
+       yPos = centerY + (radius * Math.cos(i)) * Math.sin(0 * Math.PI) + (radius * (1 - eccentricity) * Math.sin(i)) * Math.cos(0 * Math.PI);
+
+       this.disk(xPos, yPos, size, 'white');
+  };
+
+  this.render = function(e, data){
+    this.attr.system = data.system
+    this.draw(data);
 
     this.on('click', function(e){
       this.trigger(document, 'showSectors');
