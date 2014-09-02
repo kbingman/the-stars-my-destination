@@ -24,6 +24,7 @@ function sectorUI() {
   };
 
   this.stopListeningToClicks = function(){
+    // this.teardown();
     this.off('click');
   };
 

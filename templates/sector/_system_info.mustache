@@ -9,9 +9,15 @@
         {{ type }}{{ luminosity }} &ndash; {{ name }}
       </div>
     {{/ stars }}
+    {{# star }}
+        <div class="_star">
+            Ecosphere: {{# round }}{{ ecospherRadius }}{{/ round }} AU
+        </div>
+    {{/ star }}
     {{# planets }}
       <div class="_planet">
         {{# round }}{{ mass }}{{/ round }} EM&mdash;{{ gasGiant }}
+        {{# round }}{{ distanceFromPrimaryStar }}{{/ round }} AU
       </div>
     {{/ planets }}
   {{/ system }}

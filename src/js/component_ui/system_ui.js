@@ -1,11 +1,16 @@
+ORBITAL_SPEED = 0.02;
 var flight = require('../lib/flight');
 var utils = flight.utils;
 var withCanvas = require('../mixin/with_canvas.js');
-var Alea = require('alea')
+var Alea = require('alea');
+
+var _cos = Math.cos(0 * Math.PI);
+var _sin = Math.sin(0 * Math.PI);
 
 module.exports = flight.component(withCanvas, systemUI);
 
 function systemUI() {
+
   this.attributes({
     context: '',
     info: '.info'
@@ -19,59 +24,90 @@ function systemUI() {
     var self = this;
     var system = data.system;
     var alea = new Alea(system.rand);
+    var context = this.attr.context;
 
     var _radius = system.stars[0].radius;
-    var _offset = (system.stars.length - 1) * 11 * system.rand * _radius;
+    var _stellarOffset = (system.stars.length - 1) * 11 * system.rand * _radius;
     var _x = $(window).width() / 2;
     var _y = $(window).height() / 2;
-    var offset = system.stars[0].radius * 8;
+    var _offset = system.stars[0].radius * 8;
 
-    (function animate(){
+    if (!this.attr.animationID) {
+      self.attr.animationID = window.requestAnimationFrame(animate, self.node);
+    }
 
-        self.clear();
-        window.requestAnimationFrame(animate);
-        data.system.stars.forEach(function(star, i, stars){
-          if (i % 2 ){
-            _offset = _offset * -1;
-          }
-          self.disk(_x + _offset, _y, star.radius * 8, star.color);
-        }, this);
+    function animate(){
+      if (self.attr.animationID){
+        self.attr.animationID = window.requestAnimationFrame(animate, self.node);
+      } else {
+        return;
+      }
 
-        data.system.planets.forEach(function(planet, i){
-          self.circle(_x, _y, offset + planet.distanceFromPrimaryStar * 8, '#444', planet.eccentricity);
-        }, this);
+      self.clear();
 
-        data.system.planets.forEach(function(planet, i){
-          var xOffset = planet.distanceFromPrimaryStar * planet.eccentricity;
+      self.circle(_x, _y, _offset + data.system.star.ecospherRadius * 8, 'green');
 
-          planet.index = planet.index ? planet.index += 0.01 : alea() * 3000;
-          self.drawPlanet(_x, _y, offset, planet);
-        }, this);
-    })();
+      // Static
+      data.system.stars.forEach(function(star, i, stars){
+        if (i % 2 ){
+          _stellarOffset = _stellarOffset * -1;
+        }
+        self.disk(_x + _stellarOffset, _y, star.radius * 8, star.color);
+      }, this);
 
-  };
+      // Static
+      data.system.planets.forEach(function(planet, i){
+        var radius = planet.distanceFromPrimaryStar * 8 + _offset;
+        var eccentricity = planet.eccentricity;
+        var _shortRadius = radius * (1 - eccentricity);
+        var centerOffset = radius - _shortRadius;
 
-  this.drawPlanet = function(centerX, centerY, offset, planet){
-       var context = this.attr.context;
-       var radius = planet.distanceFromPrimaryStar * 8 + offset;
-       var eccentricity = planet.eccentricity;
-       var size = planet.gasGiant ? planet.equatorialRadius / 10000 : 2;
-       size = size >= 2 ? size : 2;
-       var period = planet.lengthOfYear;
-       var i = planet.index / period;
+        self.circle(_x - centerOffset, _y, radius, '#444', planet.eccentricity);
+      }, this);
 
-       xPos = centerX - (radius * (1 - eccentricity)  * Math.sin(i)) * Math.sin(0 * Math.PI) + (radius * Math.cos(i)) * Math.cos(0 * Math.PI);
-       yPos = centerY + (radius * Math.cos(i)) * Math.sin(0 * Math.PI) + (radius * (1 - eccentricity) * Math.sin(i)) * Math.cos(0 * Math.PI);
+      data.system.planets.forEach(function(planet, i){
+        var xOffset = planet.distanceFromPrimaryStar * planet.eccentricity;
 
-       this.disk(xPos, yPos, size, 'white');
+        planet.index = planet.index ? planet.index += ORBITAL_SPEED : alea() * 3000;
+        drawPlanet(_x, _y, _offset, planet);
+      }, this);
+    }
+
+    function drawPlanet(centerX, centerY, offset, planet){
+      var radius = planet.distanceFromPrimaryStar * 8 + offset;
+      var eccentricity = planet.eccentricity;
+      var _shortRadius = radius * (1 - eccentricity);
+      var centerOffset = radius - _shortRadius;
+
+      var size = planet.gasGiant ? planet.equatorialRadius / 10000 : 2;
+      var period = planet.lengthOfYear;
+      var i = planet.index / period;
+
+      var _sinI = Math.sin(i);
+      var _cosI = Math.cos(i);
+
+      // Minimum size
+      size = size >= 2 ? size : 2;
+
+      xPos = centerX - centerOffset - (_shortRadius  * _sinI) * _sin + (radius * _cosI) * _cos;
+      yPos = centerY + (radius * _cosI) * _sin + (_shortRadius * _sinI) * _cos;
+
+      self.disk(xPos, yPos, size, 'white');
+    }
+
   };
 
   this.render = function(e, data){
-    this.attr.system = data.system
+    var self = this;
+    this.attr.system = data.system;
     this.draw(data);
 
     this.on('click', function(e){
-      this.trigger(document, 'showSectors');
+        window.cancelAnimationFrame(self.attr.animationID);
+        self.attr.animationID = undefined;
+        self.clear();
+        self.trigger(document, 'showSectors');
+
     });
   };
 

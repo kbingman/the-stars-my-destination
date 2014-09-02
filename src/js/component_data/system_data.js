@@ -38,13 +38,11 @@ function systemData() {
     var generator = new System(rand * 10e16);
     var accrete = generator.distributePlanets(this.attr.system.mass);
 
-    // console.log(accrete);
+    console.log(accrete);
 
     // Get all major planets
-    this.attr.system.planets = accrete.planets.map(function(p){
-        // console.log(p)
-        return p;
-    });
+    this.attr.system.planets = accrete.planets;
+    this.attr.system.star = accrete.star;
 
     this.trigger('uiRenderSystem', {
       system: data.system
