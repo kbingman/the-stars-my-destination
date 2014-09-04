@@ -78,6 +78,10 @@ function sectorData() {
     });
   };
 
+  this.planetStats = function(e) {
+
+  };
+
   this.setSystem = function(i, j, k, seed){
     var a = new Alea(seed);
     var rand = a();

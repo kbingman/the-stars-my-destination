@@ -1,4 +1,4 @@
-ORBITAL_SPEED = 0.01;
+var ORBITAL_SPEED = 0.01;
 
 var flight = require('../lib/flight');
 var utils = flight.utils;
@@ -13,8 +13,7 @@ module.exports = flight.component(withCanvas, systemUI);
 function systemUI() {
 
   this.attributes({
-    context: '',
-    info: '.info'
+    context: ''
   });
 
   this.setup = function(){
