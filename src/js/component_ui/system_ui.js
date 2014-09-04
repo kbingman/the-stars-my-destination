@@ -1,11 +1,12 @@
-ORBITAL_SPEED = 0.02;
+ORBITAL_SPEED = 0.01;
+
 var flight = require('../lib/flight');
 var utils = flight.utils;
 var withCanvas = require('../mixin/with_canvas.js');
 var Alea = require('alea');
 
-var _cos = Math.cos(0 * Math.PI);
-var _sin = Math.sin(0 * Math.PI);
+var _cos = 1;
+var _sin = 0;
 
 module.exports = flight.component(withCanvas, systemUI);
 
@@ -83,14 +84,11 @@ function systemUI() {
       var period = planet.lengthOfYear;
       var i = planet.index / period;
 
-      var _sinI = Math.sin(i);
-      var _cosI = Math.cos(i);
-
       // Minimum size
       size = size >= 2 ? size : 2;
 
-      xPos = centerX - centerOffset - (_shortRadius  * _sinI) * _sin + (radius * _cosI) * _cos;
-      yPos = centerY + (radius * _cosI) * _sin + (_shortRadius * _sinI) * _cos;
+      xPos = centerX - centerOffset - (radius * Math.cos(i));
+      yPos = centerY + (_shortRadius * Math.sin(i));
 
       self.disk(xPos, yPos, size, 'white');
     }
@@ -107,7 +105,6 @@ function systemUI() {
         self.attr.animationID = undefined;
         self.clear();
         self.trigger(document, 'showSectors');
-
     });
   };
 

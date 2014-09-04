@@ -1,5 +1,5 @@
 FUZZINESS = 4;
-BASE_THRESHOLD = 64;
+BASE_THRESHOLD = 32;
 BINARY_FREQ = 1; //0.50;
 TRINARY_FREQ = 1; //0.88;
 
@@ -31,12 +31,11 @@ function sectorData() {
         system.y < y + fuzziness;
     });
 
-    console.log(systems);
-    // if (systems.length === 1){
-    this.trigger('buildSystemData', {
-      system: systems[0]
-    });
-    // }
+    if (systems.length > 0){
+        this.trigger('buildSystemData', {
+          system: systems[0]
+        });
+    }
   };
 
   this.calcSystems = function() {
@@ -69,31 +68,8 @@ function sectorData() {
       }
       console.log(this.attr.systems.length);
       // this.logger();
-
-      console.log(+new Date() - this.attr.start + 'ms');
-
-      console.log('red', this.attr.systems.filter(function(s){
-        return s.stars[0].type === 'M';
-      }).length);
-      console.log('orange', this.attr.systems.filter(function(s){
-        return s.stars[0].type === 'K';
-      }).length);
-      console.log('yellow', this.attr.systems.filter(function(s){
-        return s.stars[0].type === 'G';
-      }).length);
-      console.log('yellow-white', this.attr.systems.filter(function(s){
-        return s.stars[0].type === 'F';
-      }).length);
-      console.log('white', this.attr.systems.filter(function(s){
-        return s.stars[0].type === 'A';
-      }).length);
-      console.log('blue-white', this.attr.systems.filter(function(s){
-        return s.stars[0].type === 'B';
-      }).length);
-      console.log('blue', this.attr.systems.filter(function(s){
-        return s.stars[0].type === 'O';
-      }).length);
     }
+    window.systems = this.attr.systems;
 
     this.trigger(document, 'uiRenderStars', {
       systems: this.attr.systems,

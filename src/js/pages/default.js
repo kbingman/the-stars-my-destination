@@ -10,8 +10,8 @@ var systemUI = require('../component_ui/system_ui.js');
 var infoUI = require('../component_ui/info_ui.js');
 var router = require('../component_data/history.js');
 
-var height = $(window).height();
-var width = $(window).width();
+var height = document.documentElement.clientHeight;
+var width = document.documentElement.clientWidth;
 
 // flight.debug.enable(true);
 // DEBUG.events.logAll();

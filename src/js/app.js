@@ -1,10 +1,12 @@
 var $ = require('jquery');
 var flight = require('./lib/flight');
+var System = require('./lib/accrete');
 
 /**
  * Expose Globals
  */
 window.$ = $;
+window.System = System;
 
 /**
  * Loads Flight components

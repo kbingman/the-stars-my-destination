@@ -26,8 +26,7 @@ function systemData() {
 
 
     this.attr.system = data.system;
-    this.attr.system.bodies = [];
-    this.attr.seed = alea();
+    this.attr.seed = rand;
     this.attr.system.mass = this.attr.system.stars.reduce(function(memo, s){
         memo = memo + s.mass;
         return memo;
@@ -38,11 +37,11 @@ function systemData() {
     var generator = new System(rand * 10e16);
     var accrete = generator.distributePlanets(this.attr.system.mass);
 
-    console.log(accrete);
-
     // Get all major planets
     this.attr.system.planets = accrete.planets;
     this.attr.system.star = accrete.star;
+
+    console.log(data.system);
 
     this.trigger('uiRenderSystem', {
       system: data.system

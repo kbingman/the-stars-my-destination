@@ -23,7 +23,7 @@ function withHogan(template) {
         }
     };
     var context = flight.utils.merge(utils, data);
-    console.log(context);
+
     this.$node.html(template.render(context));
   };
 

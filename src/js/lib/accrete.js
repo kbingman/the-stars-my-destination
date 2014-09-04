@@ -373,10 +373,10 @@ Astro.prototype = Object.create({
         temp = 1.0 / ((temp / radians_per_rotation) * SECONDS_PER_HOUR);
         if (temp >= orbital_period) {
         spin_resonance_period = ((1.0 - eccentricity) / (1.0 + eccentricity)) * orbital_period;
-        printf("...maybe: %f\n", spin_resonance_period);
+        // printf("...maybe: %f\n", spin_resonance_period);
 
         if (eccentricity > 0.01) {
-            printf("...resonance...\n");
+            console.log("...resonance...\n");
             temp = spin_resonance_period;
             spin_resonance = TRUE;
         } else
@@ -473,7 +473,7 @@ Astro.prototype = Object.create({
     /* surface reservoirs (otherwise, it suffers from the greenhouse effect).
     /*--------------------------------------------------------------------------*/
     greenhouse: function(zone, orbital_radius, greenhouse_radius) {
-        if ((orbital_radius < greenhouse_radius) && (zone == 1))
+        if (orbital_radius < greenhouse_radius && zone == 1 && this.pressure > 0)
         return (TRUE);
         else
         return (FALSE);
@@ -499,7 +499,7 @@ Astro.prototype = Object.create({
                     break;
                 default:
                     proportion_const = 10.0;
-                    printf("Error: orbital zone not initialized correctly!\n");
+                    console.log("Error: orbital zone not initialized correctly!\n");
                     break;
             }
             mass_in_earth_units = mass * EARTH_MASSES_PER_SOLAR_MASS;
@@ -1060,10 +1060,10 @@ Accrete.prototype = Object.create({
             e = utils.randomEccentricity();
             mass = new MASS(PROTOPLANET_MASS);
             if (VERBOSE) {
-                console.debug('Checking' + a + 'AU');
+                // console.debug('Checking' + a + 'AU');
             }
             if (this.dustAvailable(this.innerEffectLimit(a, e, mass.VALUE), this.outerEffectLimit(a, e, mass.VALUE))) {
-                console.debug('.. Injecting protoplanet.');
+                // console.debug('.. Injecting protoplanet.');
 
                 dust_density = DUST_DENSITY_COEFF * Math.sqrt(stellar_mass_ratio) * Math.exp(-ALPHA * Math.pow(a, (1.0 / N)));
                 crit_mass = this.criticalLimit(a, e, stellar_luminosity_ratio);
@@ -1071,11 +1071,11 @@ Accrete.prototype = Object.create({
                 if ((mass.VALUE !== 0.0) && (mass.VALUE != PROTOPLANET_MASS)) {
                     this.coalescePlanetesimals(a, e, mass.VALUE, crit_mass, stellar_luminosity_ratio, planetesimal_inner_bound, planetesimal_outer_bound);
                 } else {
-                    console.debug('.. failed due to large neighbor.');
+                    // console.debug('.. failed due to large neighbor.');
                 }
             } else {
                 if (VERBOSE) {
-                    console.debug('.. failed.');
+                    // console.debug('.. failed.');
                 }
             }
         }
@@ -1281,7 +1281,7 @@ Accrete.prototype = Object.create({
             dist2 = (node1.a * (1.0 + node1.e) * (1.0 + reduced_mass)) - node1.a;
         }
         if (Math.abs(temp.VALUE) <= Math.abs(dist1) || Math.abs(temp.VALUE) <= Math.abs(dist2)) {
-            console.debug('Collision between two planetesimals!');
+            // console.debug('Collision between two planetesimals!');
 
             a3 = (node1.mass + mass) / ((node1.mass / node1.a) + (mass / a));
             temp = new MASS(node1.mass * Math.sqrt(node1.a) * Math.sqrt(1.0 - Math.pow(node1.e, 2.0)));

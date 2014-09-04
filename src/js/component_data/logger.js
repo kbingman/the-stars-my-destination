@@ -1,4 +1,4 @@
-mdoule.exports = function(){
+module.exports = function(){
   // console.log(+new Date() - start + 'ms');
   console.log('systems', this.attr.systems.length);
   console.log('red', this.attr.systems.filter(function(s){
