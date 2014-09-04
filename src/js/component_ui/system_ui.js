@@ -1,12 +1,8 @@
 var ORBITAL_SPEED = 0.01;
 
 var flight = require('../lib/flight');
-var utils = flight.utils;
 var withCanvas = require('../mixin/with_canvas.js');
 var Alea = require('alea');
-
-var _cos = 1;
-var _sin = 0;
 
 module.exports = flight.component(withCanvas, systemUI);
 
