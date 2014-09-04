@@ -83,11 +83,11 @@ function systemUI() {
       var period = planet.lengthOfYear;
       var i = planet.index / period;
 
+      var xPos = centerX - centerOffset - (radius * Math.cos(i));
+      var yPos = centerY + (_shortRadius * Math.sin(i));
+
       // Minimum size
       size = size >= 2 ? size : 2;
-
-      xPos = centerX - centerOffset - (radius * Math.cos(i));
-      yPos = centerY + (_shortRadius * Math.sin(i));
 
       self.disk(xPos, yPos, size, 'white');
     }
