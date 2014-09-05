@@ -1,1 +1,1 @@
-web: the-stars-my-destination
+web: stars
