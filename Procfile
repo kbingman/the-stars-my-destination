@@ -1,1 +1,1 @@
-web: *.go
+web: the-stars-my-destination

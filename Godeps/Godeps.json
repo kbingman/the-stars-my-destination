@@ -1,0 +1,20 @@
+{
+	"ImportPath": "github.com/kbingman/the-stars-my-destination",
+	"GoVersion": "go1.2.2",
+	"Deps": [
+		{
+			"ImportPath": "github.com/codegangsta/negroni",
+			"Comment": "v0.1-27-g46bd821",
+			"Rev": "46bd821940d86fb9777f7f86e9ae428132e110da"
+		},
+		{
+			"ImportPath": "github.com/hoisie/mustache",
+			"Comment": "0.0.1-9-ge3ee57d",
+			"Rev": "e3ee57d17a0b1cd59bb72d4b6c24aefc38a6d4ac"
+		},
+		{
+			"ImportPath": "github.com/julienschmidt/httprouter",
+			"Rev": "afa7ae29ca847252b56d9279b6a012c1a7a5e225"
+		}
+	]
+}
