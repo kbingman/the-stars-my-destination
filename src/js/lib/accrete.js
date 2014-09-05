@@ -228,42 +228,42 @@ Astro.prototype = Object.create({
     },
 
     /*--------------------------------------------------------------------------*/
-    /* Returns the radius of the planet in kilometers. */
-    /* The mass passed in is in units of solar masses, the orbital radius */
+    /* Returns the radius of the planet in kilometers.
+    /* The mass passed in is in units of solar masses, the orbital radius
     /* in A.U. */
-    /* This formula is listed as eq.9 in Fogg's article, although some typos */
-    /* crop up in that eq. See "The Internal Constitution of Planets", by */
-    /* Dr. D. S. Kothari, Mon. Not. of the Royal Astronomical Society, vol 96 */
-    /* pp.833-843, 1936 for the derivation. Specifically, this is Kothari's */
-    /* eq.23, which appears on page 840. */
-    /*--------------------------------------------------------------------------*/
+    /* This formula is listed as eq.9 in Fogg's article, although some typos
+    /* crop up in that eq. See "The Internal Constitution of Planets", by
+    /* Dr. D. S. Kothari, Mon. Not. of the Royal Astronomical Society, vol 96
+    /* pp.833-843, 1936 for the derivation. Specifically, this is Kothari's
+    /* eq.23, which appears on page 840.
+    /*---------------------------------------------------------------------------*/
     kothariRadius: function(mass, orbital_radius, giant, zone) {
         var temp, temp2, atomic_weight, atomic_num;
 
         if (zone == 1) {
-        if (giant) {
-            atomic_weight = 9.5;
-            atomic_num = 4.5;
-        } else {
-            atomic_weight = 15.0;
-            atomic_num = 8.0;
-        }
-        } else if (zone == 2) {
-        if (giant) {
-            atomic_weight = 2.47;
-            atomic_num = 2.0;
-        } else {
-            atomic_weight = 10.0;
-            atomic_num = 5.0;
-        }
-        } else {
-        if (giant) {
-            atomic_weight = 7.0;
-            atomic_num = 4.0;
-        } else {
-            atomic_weight = 10.0;
-            atomic_num = 5.0;
-        }
+            if (giant) {
+                atomic_weight = 9.5;
+                atomic_num = 4.5;
+            } else {
+                atomic_weight = 15.0;
+                atomic_num = 8.0;
+            }
+            } else if (zone == 2) {
+            if (giant) {
+                atomic_weight = 2.47;
+                atomic_num = 2.0;
+            } else {
+                atomic_weight = 10.0;
+                atomic_num = 5.0;
+            }
+            } else {
+            if (giant) {
+                atomic_weight = 7.0;
+                atomic_num = 4.0;
+            } else {
+                atomic_weight = 10.0;
+                atomic_num = 5.0;
+            }
         }
         temp = atomic_weight * atomic_num;
         temp = (2.0 * BETA_20 * Math.pow(SOLAR_MASS_IN_GRAMS, (1.0 / 3.0))) / (A1_20 * Math.pow(temp, (1.0 / 3.0)));
@@ -373,10 +373,10 @@ Astro.prototype = Object.create({
         temp = 1.0 / ((temp / radians_per_rotation) * SECONDS_PER_HOUR);
         if (temp >= orbital_period) {
         spin_resonance_period = ((1.0 - eccentricity) / (1.0 + eccentricity)) * orbital_period;
-        // printf("...maybe: %f\n", spin_resonance_period);
+        printf("...maybe: %f\n", spin_resonance_period);
 
         if (eccentricity > 0.01) {
-            console.log("...resonance...\n");
+            printf("...resonance...\n");
             temp = spin_resonance_period;
             spin_resonance = TRUE;
         } else
@@ -473,10 +473,10 @@ Astro.prototype = Object.create({
     /* surface reservoirs (otherwise, it suffers from the greenhouse effect).
     /*--------------------------------------------------------------------------*/
     greenhouse: function(zone, orbital_radius, greenhouse_radius) {
-        if (orbital_radius < greenhouse_radius && zone == 1 && this.pressure > 0)
-        return (TRUE);
+        if (orbital_radius < greenhouse_radius && zone == 1)
+            return true;
         else
-        return (FALSE);
+            return false;
     },
 
     /*--------------------------------------------------------------------------*/
@@ -499,7 +499,7 @@ Astro.prototype = Object.create({
                     break;
                 default:
                     proportion_const = 10.0;
-                    console.log("Error: orbital zone not initialized correctly!\n");
+                    printf("Error: orbital zone not initialized correctly!\n");
                     break;
             }
             mass_in_earth_units = mass * EARTH_MASSES_PER_SOLAR_MASS;
@@ -527,13 +527,13 @@ Astro.prototype = Object.create({
     },
 
 
-    /*--------------------------------------------------------------------------*/
-    /* This function is Fogg's eq.22. Given the volatile gas inventory and
-    /* planetary radius of a planet (in Km), this function returns the
-    /* fraction of the planet covered with water.
-    /* I have changed the function very slightly: the fraction of Earth's
-    /* surface covered by water is 71%, not 75% as Fogg used.
-    /*--------------------------------------------------------------------------*/
+    /**--------------------------------------------------------------------------
+     * This function is Fogg's eq.22. Given the volatile gas inventory and
+     * planetary radius of a planet (in Km), this function returns the
+     * fraction of the planet covered with water.
+     * I have changed the function very slightly: the fraction of Earth's
+     * surface covered by water is 71%, not 75% as Fogg used.
+     *--------------------------------------------------------------------------*/
     hydrosphereFraction: function(volatile_gas_inventory, planetary_radius) {
         var temp;
 
@@ -546,17 +546,17 @@ Astro.prototype = Object.create({
         }
     },
 
-    /*--------------------------------------------------------------------------*/
-    /* The temperature calculated is in degrees Kelvin.
-    /* Quantities already known which are used in these calculations:
-    /* planet->molecule_weight
-    /* planet->surface_pressure
-    /* R_ecosphere
-    /* planet->a
-    /* planet->volatile_gas_inventory
-    /* planet->radius
-    /* planet->boil_point
-    /*--------------------------------------------------------------------------*/
+    /**--------------------------------------------------------------------------
+     * The temperature calculated is in degrees Kelvin.
+     * Quantities already known which are used in these calculations:
+     * planet->molecule_weight
+     * planet->surface_pressure
+     * R_ecosphere
+     * planet->a
+     * planet->volatile_gas_inventory
+     * planet->radius
+     * planet->boil_point
+     *--------------------------------------------------------------------------*/
     iterateSurfaceTemp: function(planet) {
 
         var surface_temp, effective_temp, greenhouse_rise, previous_temp, optical_depth,
@@ -1060,10 +1060,10 @@ Accrete.prototype = Object.create({
             e = utils.randomEccentricity();
             mass = new MASS(PROTOPLANET_MASS);
             if (VERBOSE) {
-                // console.debug('Checking' + a + 'AU');
+                console.debug('Checking' + a + 'AU');
             }
             if (this.dustAvailable(this.innerEffectLimit(a, e, mass.VALUE), this.outerEffectLimit(a, e, mass.VALUE))) {
-                // console.debug('.. Injecting protoplanet.');
+                console.debug('.. Injecting protoplanet.');
 
                 dust_density = DUST_DENSITY_COEFF * Math.sqrt(stellar_mass_ratio) * Math.exp(-ALPHA * Math.pow(a, (1.0 / N)));
                 crit_mass = this.criticalLimit(a, e, stellar_luminosity_ratio);
@@ -1071,11 +1071,11 @@ Accrete.prototype = Object.create({
                 if ((mass.VALUE !== 0.0) && (mass.VALUE != PROTOPLANET_MASS)) {
                     this.coalescePlanetesimals(a, e, mass.VALUE, crit_mass, stellar_luminosity_ratio, planetesimal_inner_bound, planetesimal_outer_bound);
                 } else {
-                    // console.debug('.. failed due to large neighbor.');
+                    console.debug('.. failed due to large neighbor.');
                 }
             } else {
                 if (VERBOSE) {
-                    // console.debug('.. failed.');
+                    console.debug('.. failed.');
                 }
             }
         }
@@ -1281,7 +1281,7 @@ Accrete.prototype = Object.create({
             dist2 = (node1.a * (1.0 + node1.e) * (1.0 + reduced_mass)) - node1.a;
         }
         if (Math.abs(temp.VALUE) <= Math.abs(dist1) || Math.abs(temp.VALUE) <= Math.abs(dist2)) {
-            // console.debug('Collision between two planetesimals!');
+            console.debug('Collision between two planetesimals!');
 
             a3 = (node1.mass + mass) / ((node1.mass / node1.a) + (mass / a));
             temp = new MASS(node1.mass * Math.sqrt(node1.a) * Math.sqrt(1.0 - Math.pow(node1.e, 2.0)));
@@ -1409,7 +1409,7 @@ System.prototype = Object.create({
         }
 
         r_ecosphere = Math.sqrt(stellar_luminosity_ratio);
-        var r_greenhouse = r_ecosphere * GREENHOUSE_EFFECT_CONST;
+        r_greenhouse = r_ecosphere * GREENHOUSE_EFFECT_CONST;
 
         while (planet !== NULL) {
             planet.orbit_zone = astro.orbitalZone(planet.a);
@@ -1429,6 +1429,8 @@ System.prototype = Object.create({
             planet.surface_accel = astro.acceleration(planet.mass, planet.radius);
             planet.rms_velocity = astro.rmsVel(MOLECULAR_NITROGEN, planet.a);
             planet.molecule_weight = astro.moleculeLimit(planet.a, planet.mass, planet.radius);
+
+            planet.type = this.setPlanetType(planet);
 
             if ((planet.gasGiant)) {
                 planet.surface_grav = INCREDIBLY_LARGE_NUMBER;
@@ -1460,6 +1462,24 @@ System.prototype = Object.create({
         }
 
         return this.systemToJSON(planets);
+    },
+
+    setPlanetType: function(planet) {
+
+        var mass = planet.mass * EARTH_MASSES_PER_SOLAR_MASS;
+        if (planet.gasGiant) {
+            switch (true) {
+                case mass <= 5:
+                    return 'gasDwarf';
+                case mass > 5 && mass < 42:
+                    return 'Neptunian';
+                default:
+                    return 'Jovian';
+            }
+        } else {
+            console.log('planet', planet)
+            return 'Unknown';
+        }
     },
 
     systemToJSON: function(planets) {
@@ -1500,7 +1520,7 @@ System.prototype = Object.create({
                 'albedo' : planet.albedo,
                 'lengthOfYear' : (planet.orbital_period / 365.25),
                 'lengthOfDay' : planet.day,
-
+                'type': planet.type
             };
         });
 
