@@ -19,10 +19,18 @@ function withHogan(template) {
                 var render = renderer(this);
                 var value = parseFloat(render(text)).toFixed(3);
                 return value;
-            }
+            };
+        },
+        percentage: function(){
+            return function(text){
+                var render = renderer(this);
+                var value = (parseFloat(render(text))).toFixed(0);
+                return value;
+            };
         }
     };
     var context = flight.utils.merge(utils, data);
+    // console.log(context);
 
     this.$node.html(template.render(context));
   };

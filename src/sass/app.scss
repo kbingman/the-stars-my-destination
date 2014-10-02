@@ -17,6 +17,7 @@ body {
   color: white;
   font-family: $fonts;
   ._map {
+    z-index: 1;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -26,6 +27,8 @@ body {
 }
 
 .header {
+  z-index: 10;
+  position: relative;
   font-family: $fonts;
   &.-level1 {
     font-size: 2.0rem;
@@ -40,5 +43,9 @@ body {
 }
 
 .info {
-
+  z-index: 10;
+  position: relative;
+  ._link {
+    cursor: pointer;
+  }
 }

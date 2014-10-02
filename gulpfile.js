@@ -62,4 +62,5 @@ gulp.task('default', function () {
 
   gulp.watch('./src/js/**/*.js', ['scripts']);
   gulp.watch('./src/sass/**/*.scss', ['styles']);
+  gulp.watch('./templates/**/*.mustache', ['scripts']);
 });

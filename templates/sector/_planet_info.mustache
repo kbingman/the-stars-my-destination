@@ -1,0 +1,33 @@
+<dl class="planet">
+  <dt class="">
+    Planet
+  </dt>
+  {{# planet }}
+    <dd>
+      Radius: {{# round }}{{ equatorialRadius }}{{/ round }} KM
+    </dd>
+    <dd>
+      Mass: {{# round }}{{ mass }}{{/ round }} EM
+    </dd>
+    <dd>
+      Orbit: {{# round }}{{ distanceFromPrimaryStar }}{{/ round }} AU
+    </dd>
+    {{^ gasGiant }}
+    <dd>
+      Water:
+      {{# percentage }}{{ hydrospherePercentage }}{{/ percentage }}%
+    </dd>
+    <dd>
+      Ice:
+      {{# percentage }}{{ iceCoverPercentage }}{{/ percentage }}%
+    </dd>
+    <dd>Gravity: {{# round }}{{ surfaceGravity }}{{/ round }}</dd>
+    <dd>Pressure: {{# round }}{{ surfacePressure }}{{/ round }}</dd>
+    <dd>Temp: {{# round }}{{ surfaceTemperature }}{{/ round }}</dd>
+    {{/ gasGiant }}
+
+    <dd>Molecular Weight: {{ smallestMolecularWeight }}</dd>
+
+  {{/ planet }}
+</dl>
+<a data-back>back</a>

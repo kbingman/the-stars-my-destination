@@ -16,8 +16,10 @@
     {{/ star }}
     {{# planets }}
       <div class="_planet">
-        {{# round }}{{ mass }}{{/ round }} EM&mdash;{{ type }}
-        {{# round }}{{ distanceFromPrimaryStar }}{{/ round }} AU
+        <a class="_link" data-planet="{{ number }}">
+          {{# round }}{{ mass }}{{/ round }} EM&mdash;{{ type }}
+          {{# round }}{{ distanceFromPrimaryStar }}{{/ round }} AU
+        </a>
       </div>
     {{/ planets }}
   {{/ system }}

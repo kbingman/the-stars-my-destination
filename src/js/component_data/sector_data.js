@@ -1,16 +1,23 @@
 FUZZINESS = 4;
-BASE_THRESHOLD = 32;
+BASE_THRESHOLD = 128;
 BINARY_FREQ = 1; //0.50;
 TRINARY_FREQ = 1; //0.88;
 
 var flight = require('../lib/flight');
 var withStarBuilder= require('../mixin/with_star_builder.js');
+var withSystemBuilder = require('../mixin/with_system_builder.js');
+
 var withUtils = require('../mixin/with_utils.js')
 
 var Perlin = require('proc-noise');
 var Alea = require('alea');
 
-module.exports = flight.component(withUtils, withStarBuilder, sectorData);
+module.exports = flight.component(
+  withUtils,
+  withStarBuilder,
+  withSystemBuilder,
+  sectorData
+);
 
 function sectorData() {
   this.attributes({
@@ -18,6 +25,25 @@ function sectorData() {
     width: 128,
     height: 80
   });
+
+  this.getStats = function(e, data) {
+    var systems = this.attr.systems.map(function(s){
+      return this.calculateSystem(s);
+    }, this);
+    var terrestrialPlanets = systems.reduce(function(memo, s){
+      s.planets.forEach(function(p){
+        if (!p.gasGiant){
+          memo.push(p);
+        }
+      });
+      return memo;
+    } ,[]);
+
+    this.trigger('uiShowStats', {
+      systems: systems,
+      terrestrialPlanets: terrestrialPlanets
+    });
+  };
 
   this.findSystem = function(e, data){
     var fuzziness = FUZZINESS / 8;
@@ -70,6 +96,7 @@ function sectorData() {
       // this.logger();
     }
     window.systems = this.attr.systems;
+    window.Accrete = require('../lib/accrete');
 
     this.trigger(document, 'uiRenderStars', {
       systems: this.attr.systems,
@@ -103,12 +130,16 @@ function sectorData() {
       system.stars.push(this.calculateStar(rand * a()));
     }
 
+    // system = this.calculateSystem(system);
+
     return system;
   };
 
   this.after('initialize', function() {
     this.on(document, 'needsSystemData', this.findSystem);
+    this.on(document, 'needsStaticalData', this.getStats);
     this.on(document, 'showSectors', this.calcSystems);
+    this.on(document, 'test', function(){ alert('test'); });
     this.calcSystems();
   });
 }

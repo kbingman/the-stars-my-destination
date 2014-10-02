@@ -96,10 +96,10 @@ function systemUI() {
     this.draw(data);
 
     this.on('click', function(e){
-        window.cancelAnimationFrame(self.attr.animationID);
-        self.attr.animationID = undefined;
-        self.clear();
-        self.trigger(document, 'showSectors');
+      window.cancelAnimationFrame(self.attr.animationID);
+      self.attr.animationID = undefined;
+      self.clear();
+      self.trigger(document, 'showSectors');
     });
   };
 

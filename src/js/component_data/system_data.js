@@ -1,55 +1,41 @@
 var flight = require('../lib/flight');
-var starTypes = require('../mixin/with_star_types.js');
-var planetTypes = require('../mixin/with_planet_types.js');
-// var withPlanetBuilder= require('../mixin/with_star_builder.js');
+var withSystemBuilder = require('../mixin/with_system_builder.js');
 
-var Perlin = require('proc-noise');
-var Alea = require('alea');
-var System = require('../lib/accrete');
-
-window.System = System
-
-module.exports = flight.component(systemData);
+module.exports = flight.component(withSystemBuilder, systemData);
 
 function systemData() {
 
   this.attributes({
-    stars: [],
     system: {}
   });
 
   this.createSystem = function(e, data){
-    var count = 0;
-    var alea = new Alea(data.system.rand);
-    var rand = alea();
-    var starType = starTypes[data.system.stars[0].name];
-
-
-    this.attr.system = data.system;
-    this.attr.seed = rand;
-    this.attr.system.mass = this.attr.system.stars.reduce(function(memo, s){
-        memo = memo + s.mass;
-        return memo;
-      }, 0);
-
-    // Create planets
-    // console.log(rand * 10e16);
-    var generator = new System(rand * 10e16);
-    var accrete = generator.distributePlanets(this.attr.system.mass);
-
-    // Get all major planets
-    this.attr.system.planets = accrete.planets;
-    this.attr.system.star = accrete.star;
-
-    console.log(data.system);
+    this.attr.system = this.calculateSystem(data.system);
 
     this.trigger('uiRenderSystem', {
-      system: data.system
+      system: this.attr.system
+    });
+  };
+
+  this.fetchPlanet = function(e, data){
+    var number = data.number;
+    var planet = this.attr.system.planets[number - 1];
+
+    this.trigger('showPlanetInfo', {
+      planet: planet
+    });
+  };
+
+  this.fetchSystem = function(e, data){
+    this.trigger('showSystemInfo', {
+      system: this.attr.system
     });
   };
 
   this.after('initialize', function(){
     this.on(document, 'buildSystemData', this.createSystem);
+    this.on(document, 'needsPlanetInfo', this.fetchPlanet);
+    this.on(document, 'needsSystemInfo', this.fetchSystem);
   });
 
 }

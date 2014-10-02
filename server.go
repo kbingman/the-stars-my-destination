@@ -29,6 +29,7 @@ func main() {
   router := httprouter.New()
 
   router.GET("/", renderIndex)
+  router.GET("/stats/", renderIndex)
   router.GET("/system/:x/:y/", renderIndex)
   // router.GET("/sector/", renderProfile)
   // router.GET("/articles/:id", renderArticle)
