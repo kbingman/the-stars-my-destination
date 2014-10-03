@@ -34,7 +34,7 @@ module.exports = {
     planetInfoUI.attachTo('[data-container="info"]');
     sectorUI.attachTo('canvas#map', { scale: 10 });
     systemUI.attachTo('canvas#map');
-    statsUI.attachTo('canvas#map');
+    statsUI.attachTo('[data-container="map"]');
     sectorData.attachTo(document);
     systemData.attachTo(document);
     router.attachTo(document, {

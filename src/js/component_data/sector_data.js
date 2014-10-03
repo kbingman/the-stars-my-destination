@@ -1,5 +1,5 @@
 FUZZINESS = 4;
-BASE_THRESHOLD = 128;
+BASE_THRESHOLD = 64;
 BINARY_FREQ = 1; //0.50;
 TRINARY_FREQ = 1; //0.88;
 
@@ -27,21 +27,42 @@ function sectorData() {
   });
 
   this.getStats = function(e, data) {
-    var systems = this.attr.systems.map(function(s){
-      return this.calculateSystem(s);
-    }, this);
-    var terrestrialPlanets = systems.reduce(function(memo, s){
-      s.planets.forEach(function(p){
+    var terrestrialPlanets = [];
+    var habitalPlanets = [];
+    var systems = [];
+    var water = [];
+    var ice = [];
+
+    this.attr.systems.forEach(function(s){
+      var system = this.calculateSystem(s);
+      system.planets.forEach(function(p){
+        p.x = s.x;
+        p.y = s.y;
+        p.system = '/system/' + s.x.toFixed(1) + '/' + s.y.toFixed(1) + '/';
+
         if (!p.gasGiant){
-          memo.push(p);
+          terrestrialPlanets.push(p);
+        }
+        if (p.surfaceTemperature > -50 && p.surfaceTemperature < 40 && p.surfacePressure > 0.2 && p.surfacePressure < 2){
+          habitalPlanets.push(p);
+        }
+        if (p.hydrospherePercentage > 90 && p.hydrospherePercentage <= 100){
+          water.push(p);
+        }
+
+        if (p.iceCoverPercentage > 90 && p.iceCoverPercentage <= 100){
+          ice.push(p);
         }
       });
-      return memo;
-    } ,[]);
+      systems.push(system);
+    }, this);
 
     this.trigger('uiShowStats', {
       systems: systems,
-      terrestrialPlanets: terrestrialPlanets
+      terrestrialPlanets: terrestrialPlanets,
+      habitalPlanets: habitalPlanets,
+      water: water,
+      ice: ice
     });
   };
 

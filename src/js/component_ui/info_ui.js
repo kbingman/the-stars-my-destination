@@ -1,7 +1,7 @@
 var flight = require('../lib/flight');
 var withCanvas = require('../mixin/with_hogan.js');
 
-module.exports = flight.component(infoUI, withCanvas);
+module.exports = flight.component(withCanvas, infoUI);
 
 function infoUI() {
   this.attributes({
